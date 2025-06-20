@@ -423,7 +423,7 @@
                             <i class="fas fa-phone text-rice-gold text-xl mr-4 mt-1"></i>
                             <div>
                                 <h4 class="font-semibold text-lg mb-1">Phone</h4>
-                                <p class="text-gray-300">+233 XX XXX XXXX</p>
+                                <p class="text-gray-300">+233 54 288 0528</p>
                             </div>
                         </div>
                         
@@ -536,7 +536,7 @@
                     <h4 class="font-semibold text-lg mb-4">Contact Info</h4>
                     <div class="space-y-2 text-gray-300">
                         <p><i class="fas fa-map-marker-alt mr-2"></i>Taifa Suma Ampim 23, Ghana</p>
-                        <p><i class="fas fa-phone mr-2"></i>+233 XX XXX XXXX</p>
+                        <p><i class="fas fa-phone mr-2"></i>+233 54 288 0528</p>
                         <p><i class="fas fa-envelope mr-2"></i>info@pureplatterfoods.com</p>
                     </div>
                 </div>
@@ -544,7 +544,7 @@
             
             <div class="border-t border-gray-800 mt-8 pt-8 text-center">
                 <p class="text-gray-300">
-                    &copy; 2024 PurePlatter Foods LTD. All rights reserved. | Made with <i class="fas fa-heart text-ghana-red"></i> in Ghana
+                    &copy; 2025 PurePlatter Foods LTD. All rights reserved. | Made with <i class="fas fa-heart text-ghana-red"></i> in Ghana
                 </p>
             </div>
         </div>
@@ -816,12 +816,23 @@
                 return;
             }
             
+            // Collect customer email
+            const customerEmail = prompt('Please enter your email address for the receipt:');
+            if (!customerEmail || !customerEmail.includes('@')) {
+                alert('Please enter a valid email address.');
+                return;
+            }
+            
             const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
             const totalInPesewas = total * 100; // Convert to pesewas for Paystack
             
+            // IMPORTANT: Replace this with your actual Paystack public key
+            // You can get this from your Paystack dashboard at https://dashboard.paystack.com/settings/developer
+            const paystackKey = ''; // This is a sample test key - REPLACE WITH YOUR OWN!
+            
             const handler = PaystackPop.setup({
-                key: 'pk_test_YOUR_PUBLIC_KEY_HERE', // Replace with your Paystack public key
-                email: 'customer@email.com', // You can collect this from a form
+                key: paystackKey,
+                email: customerEmail,
                 amount: totalInPesewas,
                 currency: 'GHS',
                 ref: 'PG_' + Math.floor((Math.random() * 1000000000) + 1),
@@ -830,20 +841,26 @@
                         display_name: "Cart Items",
                         variable_name: "cart_items",
                         value: cart.map(item => `${item.name} (${item.quantity})`).join(', ')
-                    }]
+                    }],
+                    customer_email: customerEmail,
+                    order_total: total,
+                    business_name: "PurePlatter Foods LTD"
                 },
                 callback: function(response) {
                     // Payment was successful
-                    alert('Payment successful! Reference: ' + response.reference);
+                    alert('🎉 Payment successful! \n\nReference: ' + response.reference + '\n\nThank you for choosing PureGrain Rice! We will contact you shortly for delivery details.');
                     clearCart();
                     cartModal.classList.add('hidden');
                     document.body.style.overflow = 'auto';
                     
-                    // You can send the payment details to your server here
+                    // You can send the payment details to your server here for order processing
                     console.log('Payment successful:', response);
+                    
+                    // Optional: Send order confirmation email
+                    // sendOrderConfirmation(response, customerEmail, cart);
                 },
                 onClose: function() {
-                    alert('Payment was cancelled');
+                    console.log('Payment dialog was closed');
                 }
             });
             
