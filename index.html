@@ -7,6 +7,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/framer-motion@10/dist/framer-motion.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://js.paystack.co/v1/inline.js"></script>
+    <script src="https://api.sandbox.africastalking.com/v1/sms/send"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -38,7 +40,12 @@
                     <a href="#about" class="text-gray-700 hover:text-rice-gold transition duration-300">About</a>
                     <a href="#products" class="text-gray-700 hover:text-rice-gold transition duration-300">Products</a>
                     <a href="#benefits" class="text-gray-700 hover:text-rice-gold transition duration-300">Benefits</a>
+                    <a href="#shop" class="text-gray-700 hover:text-rice-gold transition duration-300">Shop</a>
                     <a href="#contact" class="text-gray-700 hover:text-rice-gold transition duration-300">Contact</a>
+                    <button id="cart-btn" class="relative text-gray-700 hover:text-rice-gold transition duration-300">
+                        <i class="fas fa-shopping-cart text-xl"></i>
+                        <span id="cart-count" class="absolute -top-2 -right-2 bg-rice-gold text-white text-xs rounded-full w-5 h-5 flex items-center justify-center hidden">0</span>
+                    </button>
                 </div>
                 <div class="md:hidden flex items-center">
                     <button id="mobile-menu-button" class="text-gray-700 hover:text-rice-gold">
@@ -54,6 +61,7 @@
                 <a href="#about" class="block px-3 py-2 text-gray-700 hover:text-rice-gold">About</a>
                 <a href="#products" class="block px-3 py-2 text-gray-700 hover:text-rice-gold">Products</a>
                 <a href="#benefits" class="block px-3 py-2 text-gray-700 hover:text-rice-gold">Benefits</a>
+                <a href="#shop" class="block px-3 py-2 text-gray-700 hover:text-rice-gold">Shop</a>
                 <a href="#contact" class="block px-3 py-2 text-gray-700 hover:text-rice-gold">Contact</a>
             </div>
         </div>
@@ -72,10 +80,10 @@
                     <span class="text-ghana-green font-semibold">Proudly Produced in Ghana</span>
                 </p>
                 <div class="hero-buttons space-y-4 md:space-y-0 md:space-x-6 md:flex md:justify-center">
-                    <button class="cta-button bg-rice-gold hover:bg-yellow-600 text-white px-8 py-3 rounded-full text-lg font-semibold transition duration-300 shadow-lg hover:shadow-xl">
+                    <button onclick="scrollToSection('shop')" class="cta-button bg-rice-gold hover:bg-yellow-600 text-white px-8 py-3 rounded-full text-lg font-semibold transition duration-300 shadow-lg hover:shadow-xl">
                         Order Now
                     </button>
-                    <button class="secondary-button border-2 border-rice-gold text-rice-gold hover:bg-rice-gold hover:text-white px-8 py-3 rounded-full text-lg font-semibold transition duration-300">
+                    <button onclick="scrollToSection('about')" class="secondary-button border-2 border-rice-gold text-rice-gold hover:bg-rice-gold hover:text-white px-8 py-3 rounded-full text-lg font-semibold transition duration-300">
                         Learn More
                     </button>
                 </div>
@@ -263,6 +271,122 @@
         </div>
     </section>
 
+    <!-- Shop Section -->
+    <section id="shop" class="py-20 bg-rice-cream">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="section-title text-4xl md:text-5xl font-bold text-gray-800 mb-4">Order PureGrain Rice</h2>
+                <div class="w-24 h-1 bg-rice-gold mx-auto mb-8"></div>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Choose from our premium rice packages and enjoy fresh delivery to your doorstep
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <!-- 5KG Package -->
+                <div class="product-item bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition duration-300">
+                    <div class="bg-gradient-to-br from-rice-gold to-yellow-600 p-8 text-center">
+                        <i class="fas fa-wheat-alt text-white text-6xl mb-4"></i>
+                        <h3 class="text-2xl font-bold text-white mb-2">PureGrain Rice</h3>
+                        <p class="text-white opacity-90">5KG Package</p>
+                    </div>
+                    <div class="p-8">
+                        <div class="text-center mb-6">
+                            <span class="text-4xl font-bold text-rice-gold">₵85</span>
+                            <span class="text-gray-500 text-lg">/5kg</span>
+                        </div>
+                        <ul class="space-y-3 mb-8">
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-ghana-green mr-3"></i>
+                                <span class="text-gray-600">Premium aromatic rice</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-ghana-green mr-3"></i>
+                                <span class="text-gray-600">5KG sealed package</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-ghana-green mr-3"></i>
+                                <span class="text-gray-600">Fresh & clean</span>
+                            </li>
+                        </ul>
+                        <button onclick="addToCart('puregrain-5kg', 'PureGrain Rice 5KG', 85)" class="w-full bg-rice-gold hover:bg-yellow-600 text-white py-3 rounded-lg font-semibold transition duration-300">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- 10KG Package -->
+                <div class="product-item bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition duration-300 relative">
+                    <div class="absolute top-4 right-4 bg-ghana-red text-white px-3 py-1 rounded-full text-sm font-semibold">
+                        Popular
+                    </div>
+                    <div class="bg-gradient-to-br from-ghana-green to-green-700 p-8 text-center">
+                        <i class="fas fa-wheat-alt text-white text-6xl mb-4"></i>
+                        <h3 class="text-2xl font-bold text-white mb-2">PureGrain Rice</h3>
+                        <p class="text-white opacity-90">10KG Package</p>
+                    </div>
+                    <div class="p-8">
+                        <div class="text-center mb-6">
+                            <span class="text-4xl font-bold text-ghana-green">₵160</span>
+                            <span class="text-gray-500 text-lg">/10kg</span>
+                            <div class="text-sm text-ghana-red font-semibold">Save ₵10!</div>
+                        </div>
+                        <ul class="space-y-3 mb-8">
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-ghana-green mr-3"></i>
+                                <span class="text-gray-600">Premium aromatic rice</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-ghana-green mr-3"></i>
+                                <span class="text-gray-600">10KG sealed package</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-ghana-green mr-3"></i>
+                                <span class="text-gray-600">Best value for families</span>
+                            </li>
+                        </ul>
+                        <button onclick="addToCart('puregrain-10kg', 'PureGrain Rice 10KG', 160)" class="w-full bg-ghana-green hover:bg-green-700 text-white py-3 rounded-lg font-semibold transition duration-300">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- 25KG Package -->
+                <div class="product-item bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition duration-300">
+                    <div class="bg-gradient-to-br from-gray-700 to-black p-8 text-center">
+                        <i class="fas fa-wheat-alt text-white text-6xl mb-4"></i>
+                        <h3 class="text-2xl font-bold text-white mb-2">PureGrain Rice</h3>
+                        <p class="text-white opacity-90">25KG Bulk</p>
+                    </div>
+                    <div class="p-8">
+                        <div class="text-center mb-6">
+                            <span class="text-4xl font-bold text-gray-800">₵380</span>
+                            <span class="text-gray-500 text-lg">/25kg</span>
+                            <div class="text-sm text-ghana-red font-semibold">Save ₵45!</div>
+                        </div>
+                        <ul class="space-y-3 mb-8">
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-ghana-green mr-3"></i>
+                                <span class="text-gray-600">Premium aromatic rice</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-ghana-green mr-3"></i>
+                                <span class="text-gray-600">25KG bulk package</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-ghana-green mr-3"></i>
+                                <span class="text-gray-600">Perfect for businesses</span>
+                            </li>
+                        </ul>
+                        <button onclick="addToCart('puregrain-25kg', 'PureGrain Rice 25KG', 380)" class="w-full bg-gray-800 hover:bg-black text-white py-3 rounded-lg font-semibold transition duration-300">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Contact Section -->
     <section id="contact" class="py-20 bg-gray-900 text-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -426,6 +550,57 @@
         </div>
     </footer>
 
+    <!-- Shopping Cart Modal -->
+    <div id="cart-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-2xl max-w-2xl w-full max-h-screen overflow-y-auto">
+                <div class="p-6 border-b">
+                    <div class="flex justify-between items-center">
+                        <h2 class="text-2xl font-bold text-gray-800">Your Cart</h2>
+                        <button id="close-cart" class="text-gray-500 hover:text-gray-700">
+                            <i class="fas fa-times text-2xl"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="p-6">
+                    <div id="cart-items" class="space-y-4 mb-6">
+                        <div class="text-center text-gray-500 py-8">
+                            <i class="fas fa-shopping-cart text-4xl mb-4"></i>
+                            <p>Your cart is empty</p>
+                        </div>
+                    </div>
+                    
+                    <div id="cart-total" class="border-t pt-4 hidden">
+                        <div class="flex justify-between items-center text-xl font-bold">
+                            <span>Total:</span>
+                            <span id="total-amount">₵0</span>
+                        </div>
+                    </div>
+                    
+                    <div id="cart-actions" class="mt-6 hidden">
+                        <button onclick="checkout()" class="w-full bg-rice-gold hover:bg-yellow-600 text-white py-3 rounded-lg font-semibold transition duration-300 mb-3">
+                            Proceed to Checkout
+                        </button>
+                        <button onclick="clearCart()" class="w-full border border-gray-300 text-gray-700 hover:bg-gray-50 py-3 rounded-lg font-semibold transition duration-300">
+                            Clear Cart
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating WhatsApp Button -->
+    <div id="whatsapp-btn" class="fixed bottom-6 right-6 z-40">
+        <a href="https://wa.me/233542880528?text=Hello, I'm interested in PureGrain Rice. Can you tell me more about your products?" 
+           target="_blank" 
+           class="bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-lg hover:shadow-xl transition duration-300 flex items-center justify-center group">
+            <i class="fab fa-whatsapp text-2xl"></i>
+            <span class="ml-2 hidden group-hover:inline transition-all duration-300 whitespace-nowrap">Chat with us</span>
+        </a>
+    </div>
+
     <script>
         // Mobile menu toggle
         const mobileMenuButton = document.getElementById('mobile-menu-button');
@@ -474,11 +649,263 @@
             observer.observe(el);
         });
         
-        // Form submission
-        document.querySelector('form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('Thank you for your message! We will get back to you soon.');
+        // Shopping Cart Functionality
+        let cart = [];
+        const cartModal = document.getElementById('cart-modal');
+        const cartBtn = document.getElementById('cart-btn');
+        const closeCartBtn = document.getElementById('close-cart');
+        const cartCount = document.getElementById('cart-count');
+        const cartItems = document.getElementById('cart-items');
+        const cartTotal = document.getElementById('cart-total');
+        const cartActions = document.getElementById('cart-actions');
+        const totalAmount = document.getElementById('total-amount');
+        
+        // Scroll to section function
+        function scrollToSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        }
+        
+        // Add to cart function
+        function addToCart(productId, productName, price) {
+            const existingItem = cart.find(item => item.id === productId);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    id: productId,
+                    name: productName,
+                    price: price,
+                    quantity: 1
+                });
+            }
+            
+            updateCartUI();
+            showCartNotification(productName);
+        }
+        
+        // Remove from cart
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            updateCartUI();
+        }
+        
+        // Update quantity
+        function updateQuantity(productId, newQuantity) {
+            const item = cart.find(item => item.id === productId);
+            if (item) {
+                if (newQuantity <= 0) {
+                    removeFromCart(productId);
+                } else {
+                    item.quantity = newQuantity;
+                    updateCartUI();
+                }
+            }
+        }
+        
+        // Clear cart
+        function clearCart() {
+            cart = [];
+            updateCartUI();
+        }
+        
+        // Update cart UI
+        function updateCartUI() {
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            
+            // Update cart count
+            if (totalItems > 0) {
+                cartCount.textContent = totalItems;
+                cartCount.classList.remove('hidden');
+            } else {
+                cartCount.classList.add('hidden');
+            }
+            
+            // Update cart items display
+            if (cart.length === 0) {
+                cartItems.innerHTML = `
+                    <div class="text-center text-gray-500 py-8">
+                        <i class="fas fa-shopping-cart text-4xl mb-4"></i>
+                        <p>Your cart is empty</p>
+                    </div>
+                `;
+                cartTotal.classList.add('hidden');
+                cartActions.classList.add('hidden');
+            } else {
+                cartItems.innerHTML = cart.map(item => `
+                    <div class="flex items-center justify-between bg-gray-50 p-4 rounded-lg">
+                        <div class="flex-1">
+                            <h4 class="font-semibold text-gray-800">${item.name}</h4>
+                            <p class="text-rice-gold font-bold">₵${item.price}</p>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <button onclick="updateQuantity('${item.id}', ${item.quantity - 1})" class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center hover:bg-gray-300">
+                                <i class="fas fa-minus text-sm"></i>
+                            </button>
+                            <span class="w-8 text-center font-semibold">${item.quantity}</span>
+                            <button onclick="updateQuantity('${item.id}', ${item.quantity + 1})" class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center hover:bg-gray-300">
+                                <i class="fas fa-plus text-sm"></i>
+                            </button>
+                            <button onclick="removeFromCart('${item.id}')" class="ml-4 text-red-500 hover:text-red-700">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+                
+                totalAmount.textContent = `₵${total}`;
+                cartTotal.classList.remove('hidden');
+                cartActions.classList.remove('hidden');
+            }
+        }
+        
+        // Show cart notification
+        function showCartNotification(productName) {
+            const notification = document.createElement('div');
+            notification.className = 'fixed top-20 right-4 bg-ghana-green text-white px-6 py-3 rounded-lg shadow-lg z-50 transform translate-x-full transition-transform duration-300';
+            notification.innerHTML = `
+                <div class="flex items-center">
+                    <i class="fas fa-check-circle mr-2"></i>
+                    <span>${productName} added to cart!</span>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.transform = 'translateX(0)';
+            }, 100);
+            
+            setTimeout(() => {
+                notification.style.transform = 'translateX(100%)';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+        
+        // Cart modal handlers
+        cartBtn.addEventListener('click', () => {
+            cartModal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
         });
+        
+        closeCartBtn.addEventListener('click', () => {
+            cartModal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        });
+        
+        cartModal.addEventListener('click', (e) => {
+            if (e.target === cartModal) {
+                cartModal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            }
+        });
+        
+        // Paystack Checkout
+        function checkout() {
+            if (cart.length === 0) {
+                alert('Your cart is empty!');
+                return;
+            }
+            
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const totalInPesewas = total * 100; // Convert to pesewas for Paystack
+            
+            const handler = PaystackPop.setup({
+                key: 'pk_test_YOUR_PUBLIC_KEY_HERE', // Replace with your Paystack public key
+                email: 'customer@email.com', // You can collect this from a form
+                amount: totalInPesewas,
+                currency: 'GHS',
+                ref: 'PG_' + Math.floor((Math.random() * 1000000000) + 1),
+                metadata: {
+                    custom_fields: [{
+                        display_name: "Cart Items",
+                        variable_name: "cart_items",
+                        value: cart.map(item => `${item.name} (${item.quantity})`).join(', ')
+                    }]
+                },
+                callback: function(response) {
+                    // Payment was successful
+                    alert('Payment successful! Reference: ' + response.reference);
+                    clearCart();
+                    cartModal.classList.add('hidden');
+                    document.body.style.overflow = 'auto';
+                    
+                    // You can send the payment details to your server here
+                    console.log('Payment successful:', response);
+                },
+                onClose: function() {
+                    alert('Payment was cancelled');
+                }
+            });
+            
+            handler.openIframe();
+        }
+        
+        // Form submission with email functionality
+        document.querySelector('form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const firstName = this.querySelector('input[type="text"]').value;
+            const lastName = this.querySelectorAll('input[type="text"]')[1].value;
+            const email = this.querySelector('input[type="email"]').value;
+            const phone = this.querySelector('input[type="tel"]').value;
+            const subject = this.querySelector('select').value;
+            const message = this.querySelector('textarea').value;
+            
+            // Simple email sending (you'll need to implement server-side email sending)
+            // For now, we'll just show a success message and log the data
+            const emailData = {
+                to: 'vincentchrisbone@gmail.com',
+                from: email,
+                subject: `PureGrain Rice Contact: ${subject}`,
+                message: `
+                    Name: ${firstName} ${lastName}
+                    Email: ${email}
+                    Phone: ${phone}
+                    Subject: ${subject}
+                    
+                    Message:
+                    ${message}
+                `
+            };
+            
+            try {
+                // Send email to server endpoint
+                const response = await fetch('./send-email.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(emailData)
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    alert('Thank you for your message! We will get back to you soon.');
+                    this.reset();
+                } else {
+                    throw new Error(result.error || 'Failed to send email');
+                }
+                
+            } catch (error) {
+                console.error('Error sending email:', error);
+                alert('Sorry, there was an error sending your message. Please try again or contact us directly via WhatsApp.');
+            }
+        });
+        
+        // Initialize cart
+        updateCartUI();
         
         // Add some interactive hover effects
         document.querySelectorAll('.benefit-card').forEach(card => {
